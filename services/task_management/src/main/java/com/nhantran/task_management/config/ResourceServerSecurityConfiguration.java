@@ -1,4 +1,4 @@
-package com.nhantran.task_management.configs;
+package com.nhantran.task_management.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
