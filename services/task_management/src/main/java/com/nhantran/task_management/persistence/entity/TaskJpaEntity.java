@@ -1,32 +1,34 @@
-package com.nhantran.task_management.persistence;
+package com.nhantran.task_management.persistence.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.Instant;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
-@Table(name = "boards")
+@Table(name = "tasks")
+@EntityListeners(AuditingEntityListener.class)
 @Getter
 @Setter
-public class BoardJpaEntity {
+public class TaskJpaEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "board_id")
     private Long id;
 
-    @Column(name = "name")
-    private String name;
+    @Column(name = "title")
+    private String title;
 
-    @Column(name = "icon_slug")
-    private String iconSlug;
+    @Column(name = "thumbnail_url")
+    private String thumbnailUrl;
+
+    @Column(name = "status")
+    private String status;
 
     @CreatedDate
     @Column(name = "created_at", updatable = false)
@@ -38,9 +40,10 @@ public class BoardJpaEntity {
     @Temporal(TemporalType.TIMESTAMP)
     private Instant updatedAt;
 
-    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<TaskJpaEntity> tasks = new ArrayList<>();
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "board_id")
+    private BoardJpaEntity board;
 
-    @ManyToMany(mappedBy = "boards")
-    private Set<UserJpaEntity> users = new HashSet<>();
+    @ManyToMany(mappedBy = "tasks")
+    private Set<TagJpaEntity> tags = new HashSet<>();
 }

@@ -1,30 +1,31 @@
-package com.nhantran.task_management.persistence;
+package com.nhantran.task_management.persistence.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "users")
+@Table(name = "tags")
+@EntityListeners(AuditingEntityListener.class)
 @Getter
 @Setter
-public class UserJpaEntity {
+public class TagJpaEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id")
     private Long id;
 
-    @Column(name = "external_id")
-    private String externalId;
+    @Column(name = "label")
+    private String label;
 
-    @Column(name = "name")
-    private String name;
+    @Column(name = "slug", unique = true)
+    private String slug;
 
     @CreatedDate
     @Column(name = "created_at", updatable = false)
@@ -37,8 +38,8 @@ public class UserJpaEntity {
     private Instant updatedAt;
 
     @ManyToMany
-    @JoinTable(name = "users_boards",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "board_id"))
-    private Set<BoardJpaEntity> boards = new HashSet<>();
+    @JoinTable(name = "tasks_tags",
+            joinColumns = @JoinColumn(name = "tag_id"),
+            inverseJoinColumns = @JoinColumn(name = "task_id"))
+    private Set<TaskJpaEntity> tasks = new HashSet<>();
 }
