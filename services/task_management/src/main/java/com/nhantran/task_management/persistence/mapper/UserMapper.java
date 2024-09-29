@@ -11,4 +11,12 @@ public final class UserMapper {
                 jpaEntity.getName()
         );
     }
+
+    public static UserJpaEntity toUserJpaEntity(User user) {
+        return new UserJpaEntity(
+                user.getId(),
+                user.getExternalId(),
+                user.getName()
+        );
+    }
 }

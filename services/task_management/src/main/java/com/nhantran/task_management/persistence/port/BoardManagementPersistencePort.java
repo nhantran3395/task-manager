@@ -6,7 +6,7 @@ import com.nhantran.task_management.model.Task;
 import java.util.List;
 
 public interface BoardManagementPersistencePort {
-    Long createNewBoard(String name, String iconSlug, String externalUserId);
+    Long createNewBoard(Board boardToCreate);
     void deleteBoard(Long boardId, String externalUserid);
     List<Board> getBoardsViewableByUser(String externalUserId);
     List<Task> getTasksBelongToBoard(Long boardId);

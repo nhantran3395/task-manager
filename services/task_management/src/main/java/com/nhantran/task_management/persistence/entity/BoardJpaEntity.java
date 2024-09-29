@@ -43,7 +43,7 @@ public class BoardJpaEntity {
     @OneToMany(mappedBy = "board", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<TaskJpaEntity> tasks = new ArrayList<>();
 
-    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "board", cascade = CascadeType.MERGE)
     private Set<UserBoardJpaEntity> users = new HashSet<>();
 
     public BoardJpaEntity(String name, String iconSlug) {

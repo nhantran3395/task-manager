@@ -1,7 +1,9 @@
 package com.nhantran.task_management.persistence.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -16,6 +18,8 @@ import java.util.Set;
 @EntityListeners(AuditingEntityListener.class)
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class UserJpaEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,4 +43,14 @@ public class UserJpaEntity {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private Set<UserBoardJpaEntity> boards = new HashSet<>();
+
+    public UserJpaEntity(Long id, String externalId, String name) {
+        this.id = id;
+        this.externalId = externalId;
+        this.name = name;
+    }
+
+    public void registerBoardAccess(UserBoardJpaEntity userBoardJpaEntity) {
+        boards.add(userBoardJpaEntity);
+    }
 }

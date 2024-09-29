@@ -12,6 +12,9 @@ import com.nhantran.task_management.persistence.repository.BoardJpaRepository;
 import com.nhantran.task_management.persistence.repository.UserJpaRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.internal.SessionFactoryImpl;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
@@ -25,13 +28,9 @@ public class BoardManagementPersistenceAdapter implements BoardManagementPersist
     private final UserJpaRepository userRepository;
 
     @Override
-    public Long createNewBoard(String name, String iconSlug, String externalUserId) {
-        UserJpaEntity userEntity = findUser(externalUserId);
-
-        BoardJpaEntity newBoardEntity = new BoardJpaEntity(name, iconSlug);
-        newBoardEntity.addOwner(userEntity);
-
-        BoardJpaEntity createdBoardEntity = boardRepository.save(newBoardEntity);
+    public Long createNewBoard(Board boardToCreate) {
+        BoardJpaEntity boardEntity = BoardMapper.toBoardJpaEntity(boardToCreate);
+        BoardJpaEntity createdBoardEntity = boardRepository.save(boardEntity);
         return createdBoardEntity.getId();
     }
 
