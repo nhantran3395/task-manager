@@ -1,6 +1,6 @@
 package com.nhantran.task_management.persistence.mapper;
 
-import com.nhantran.task_management.model.Board;
+import com.nhantran.task_management.domain.model.Board;
 import com.nhantran.task_management.persistence.entity.BoardJpaEntity;
 import com.nhantran.task_management.persistence.entity.UserBoardAccessJpaEntity;
 

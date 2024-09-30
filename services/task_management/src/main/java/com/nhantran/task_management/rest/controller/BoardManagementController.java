@@ -1,11 +1,11 @@
-package com.nhantran.task_management.controller;
+package com.nhantran.task_management.rest.controller;
 
-import com.nhantran.task_management.dto.command.DeleteBoardCommand;
-import com.nhantran.task_management.dto.query.BoardsViewableByUserQuery;
-import com.nhantran.task_management.dto.command.CreateNewBoardCommand;
-import com.nhantran.task_management.dto.request.CreateNewBoardRequest;
-import com.nhantran.task_management.model.Board;
-import com.nhantran.task_management.service.BoardManagementUseCase;
+import com.nhantran.task_management.rest.dto.command.DeleteBoardCommand;
+import com.nhantran.task_management.rest.dto.query.BoardsViewableByUserQuery;
+import com.nhantran.task_management.rest.dto.command.CreateNewBoardCommand;
+import com.nhantran.task_management.rest.dto.request.CreateNewBoardRequest;
+import com.nhantran.task_management.domain.model.Board;
+import com.nhantran.task_management.port.in.BoardManagementUseCase;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;

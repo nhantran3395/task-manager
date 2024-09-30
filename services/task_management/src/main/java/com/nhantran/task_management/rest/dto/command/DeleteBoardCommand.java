@@ -1,4 +1,4 @@
-package com.nhantran.task_management.dto.command;
+package com.nhantran.task_management.rest.dto.command;
 
 public record DeleteBoardCommand(Long id, String externalUserId) {
 }

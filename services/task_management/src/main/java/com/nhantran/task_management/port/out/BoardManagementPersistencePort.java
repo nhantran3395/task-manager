@@ -1,8 +1,8 @@
-package com.nhantran.task_management.persistence.port;
+package com.nhantran.task_management.port.out;
 
-import com.nhantran.task_management.model.Board;
-import com.nhantran.task_management.model.Task;
-import com.nhantran.task_management.model.User;
+import com.nhantran.task_management.domain.model.Board;
+import com.nhantran.task_management.domain.model.Task;
+import com.nhantran.task_management.domain.model.User;
 
 import java.util.List;
 import java.util.Optional;

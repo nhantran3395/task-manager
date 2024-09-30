@@ -1,8 +1,8 @@
 package com.nhantran.task_management.persistence.adapter;
 
-import com.nhantran.task_management.model.User;
+import com.nhantran.task_management.domain.model.User;
 import com.nhantran.task_management.persistence.mapper.UserMapper;
-import com.nhantran.task_management.persistence.port.UserInfoPersistencePort;
+import com.nhantran.task_management.port.out.UserInfoPersistencePort;
 import com.nhantran.task_management.persistence.repository.UserJpaRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;

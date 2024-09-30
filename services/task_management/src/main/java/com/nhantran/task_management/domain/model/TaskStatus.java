@@ -1,4 +1,4 @@
-package com.nhantran.task_management.model;
+package com.nhantran.task_management.domain.model;
 
 import lombok.RequiredArgsConstructor;
 

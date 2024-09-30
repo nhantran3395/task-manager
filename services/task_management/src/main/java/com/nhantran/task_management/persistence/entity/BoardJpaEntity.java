@@ -1,6 +1,6 @@
 package com.nhantran.task_management.persistence.entity;
 
-import com.nhantran.task_management.model.BoardAccessRole;
+import com.nhantran.task_management.domain.model.BoardAccessRole;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;

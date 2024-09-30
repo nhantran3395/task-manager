@@ -1,10 +1,10 @@
 package com.nhantran.task_management.persistence.adapter;
 
-import com.nhantran.task_management.model.Board;
-import com.nhantran.task_management.model.Task;
-import com.nhantran.task_management.model.User;
+import com.nhantran.task_management.domain.model.Board;
+import com.nhantran.task_management.domain.model.Task;
+import com.nhantran.task_management.domain.model.User;
 import com.nhantran.task_management.persistence.mapper.BoardMapper;
-import com.nhantran.task_management.persistence.port.BoardManagementPersistencePort;
+import com.nhantran.task_management.port.out.BoardManagementPersistencePort;
 import com.nhantran.task_management.persistence.entity.BoardJpaEntity;
 import com.nhantran.task_management.persistence.repository.BoardJpaRepository;
 import lombok.AllArgsConstructor;

@@ -1,4 +1,4 @@
-package com.nhantran.task_management.dto.query;
+package com.nhantran.task_management.rest.dto.query;
 
 public record TasksBelongToBoardQuery(Long boardId) {
 }
