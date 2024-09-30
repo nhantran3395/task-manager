@@ -12,22 +12,17 @@ import lombok.Setter;
 @NoArgsConstructor
 public class UserBoardJpaEntity {
     @EmbeddedId
-    private UserBoardId id;
+    private UserBoardId accessId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("boardId")
     private BoardJpaEntity board;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @MapsId("userId")
-    private UserJpaEntity user;
-
     @Column(name = "role")
     private String accessRole;
 
-    public UserBoardJpaEntity(UserJpaEntity userEntity, BoardJpaEntity boardEntity, String accessRole) {
-        this.id = new UserBoardId(userEntity.getId(), boardEntity.getId());
-        this.user = userEntity;
+    public UserBoardJpaEntity(Long userId, BoardJpaEntity boardEntity, String accessRole) {
+        this.accessId = new UserBoardId(userId, boardEntity.getId());
         this.board = boardEntity;
         this.accessRole = accessRole;
     }
