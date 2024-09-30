@@ -64,6 +64,7 @@ public class BoardManagementService implements BoardManagementUseCase {
 
     @Override
     public List<Task> getTasksBelongToBoard(TasksBelongToBoardQuery query) {
-        return boardManagementPersistencePort.getTasksBelongToBoard(query.boardId());
+        return boardManagementPersistencePort
+                .getTasksBelongToBoard(query.boardId());
     }
 }
