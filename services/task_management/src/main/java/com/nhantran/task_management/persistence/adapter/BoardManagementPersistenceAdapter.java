@@ -1,6 +1,5 @@
 package com.nhantran.task_management.persistence.adapter;
 
-import com.nhantran.task_management.exception.RoleNotAllowedException;
 import com.nhantran.task_management.exception.ResourceNotFoundException;
 import com.nhantran.task_management.model.Board;
 import com.nhantran.task_management.model.Task;
@@ -11,7 +10,6 @@ import com.nhantran.task_management.persistence.entity.UserJpaEntity;
 import com.nhantran.task_management.persistence.repository.BoardJpaRepository;
 import com.nhantran.task_management.persistence.repository.UserJpaRepository;
 import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
@@ -19,10 +17,15 @@ import java.util.stream.Collectors;
 
 @Component
 @AllArgsConstructor
-@Slf4j
 public class BoardManagementPersistenceAdapter implements BoardManagementPersistencePort {
     private final BoardJpaRepository boardRepository;
     private final UserJpaRepository userRepository;
+
+    @Override
+    public Optional<Board>  findBoard(Long boardId) {
+        return boardRepository.findById(boardId)
+                .map(BoardMapper::toBoard);
+    }
 
     @Override
     public Long createNewBoard(Board boardToCreate) {
@@ -32,22 +35,8 @@ public class BoardManagementPersistenceAdapter implements BoardManagementPersist
     }
 
     @Override
-    public void deleteBoard(Long boardId, String externalUserId) {
-        log.info("user {} deleting board {}", externalUserId, boardId);
-
-        Optional<BoardJpaEntity> maybeBoard = boardRepository.findById(boardId);
-        if (maybeBoard.isEmpty()) {
-            throw new ResourceNotFoundException();
-        }
-
-        UserJpaEntity userEntity = findUser(externalUserId);
-        BoardJpaEntity board = maybeBoard.get();
-
-        if(!board.userCanDelete(userEntity)) {
-            throw new RoleNotAllowedException();
-        }
-
-        boardRepository.delete(board);
+    public void deleteBoard(Board boardToDelete) {
+        boardRepository.deleteById(boardToDelete.getId());
     }
 
     @Override

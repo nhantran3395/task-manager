@@ -28,4 +28,13 @@ public class Board {
         UserBoardAccess ownerAccess = new UserBoardAccess(this.id, user.getId(), BoardAccessRole.OWNER);
         accesses.add(ownerAccess);
     }
+
+    public boolean userCanDelete(User user) {
+        return accesses
+                .stream()
+                .anyMatch(access ->
+                        access.getUserId().equals(user.getId()) &&
+                                access.getRole().equals(BoardAccessRole.OWNER)
+                );
+    }
 }

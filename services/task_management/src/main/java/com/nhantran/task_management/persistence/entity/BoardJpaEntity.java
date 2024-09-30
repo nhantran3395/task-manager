@@ -56,13 +56,4 @@ public class BoardJpaEntity {
                 userId, this, BoardAccessRole.OWNER.getValue());
         accesses.add(userBoardAccessEntity);
     }
-
-    public boolean userCanDelete(UserJpaEntity userEntity) {
-        return getAccesses()
-                .stream()
-                .anyMatch(boardUser ->
-                        boardUser.getAccessId().getUserId().equals(userEntity.getId()) &&
-                                boardUser.getAccessRole().equals(BoardAccessRole.OWNER.getValue())
-                );
-    }
 }

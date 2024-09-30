@@ -10,7 +10,7 @@ public final class UserBoardAccessMapper {
         return new UserBoardAccess(
                 userBoardAccessJpaEntity.getAccessId().getBoardId(),
                 userBoardAccessJpaEntity.getAccessId().getUserId(),
-                BoardAccessRole.valueOf(userBoardAccessJpaEntity.getAccessRole())
+                BoardAccessRole.fromValue(userBoardAccessJpaEntity.getAccessRole())
         );
     }
 
