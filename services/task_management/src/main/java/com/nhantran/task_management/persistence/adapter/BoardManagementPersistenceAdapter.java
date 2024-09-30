@@ -12,9 +12,6 @@ import com.nhantran.task_management.persistence.repository.BoardJpaRepository;
 import com.nhantran.task_management.persistence.repository.UserJpaRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.internal.SessionFactoryImpl;
 import org.springframework.stereotype.Component;
 
 import java.util.*;

@@ -13,7 +13,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @EqualsAndHashCode
 @Getter
-public class UserBoardId implements Serializable {
+public class UserBoardAccessId implements Serializable {
     @Column(name = "user_id")
     private Long userId;
     @Column(name = "board_id")

@@ -43,25 +43,25 @@ public class BoardJpaEntity {
     @OneToMany(mappedBy = "board", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<TaskJpaEntity> tasks = new ArrayList<>();
 
-    @OneToMany(mappedBy = "board", cascade = CascadeType.MERGE)
-    private Set<UserBoardJpaEntity> users = new HashSet<>();
+    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<UserBoardAccessJpaEntity> accesses = new HashSet<>();
 
     public BoardJpaEntity(String name, String iconSlug) {
         this.name = name;
         this.iconSlug = iconSlug;
     }
 
-    public void addOwner(UserJpaEntity userEntity) {
-        UserBoardJpaEntity userBoardEntity = new UserBoardJpaEntity(
-                userEntity, this, BoardAccessRole.OWNER.getValue());
-        users.add(userBoardEntity);
+    public void addOwner(Long userId) {
+        UserBoardAccessJpaEntity userBoardAccessEntity = new UserBoardAccessJpaEntity(
+                userId, this, BoardAccessRole.OWNER.getValue());
+        accesses.add(userBoardAccessEntity);
     }
 
     public boolean userCanDelete(UserJpaEntity userEntity) {
-        return getUsers()
+        return getAccesses()
                 .stream()
                 .anyMatch(boardUser ->
-                        boardUser.getUser().getId().equals(userEntity.getId()) &&
+                        boardUser.getAccessId().getUserId().equals(userEntity.getId()) &&
                                 boardUser.getAccessRole().equals(BoardAccessRole.OWNER.getValue())
                 );
     }

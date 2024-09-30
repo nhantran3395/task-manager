@@ -3,29 +3,25 @@ package com.nhantran.task_management.persistence.mapper;
 import com.nhantran.task_management.model.BoardAccessRole;
 import com.nhantran.task_management.model.UserBoardAccess;
 import com.nhantran.task_management.persistence.entity.BoardJpaEntity;
-import com.nhantran.task_management.persistence.entity.UserBoardJpaEntity;
-import com.nhantran.task_management.persistence.entity.UserJpaEntity;
+import com.nhantran.task_management.persistence.entity.UserBoardAccessJpaEntity;
 
 public final class UserBoardAccessMapper {
-    public static UserBoardAccess toUserBoardAccess(UserBoardJpaEntity userBoardJpaEntity) {
+    public static UserBoardAccess toUserBoardAccess(UserBoardAccessJpaEntity userBoardAccessJpaEntity) {
         return new UserBoardAccess(
-                BoardMapper.toBoard(userBoardJpaEntity.getBoard()),
-                UserMapper.toUser(userBoardJpaEntity.getUser()),
-                BoardAccessRole.valueOf(userBoardJpaEntity.getAccessRole())
+                userBoardAccessJpaEntity.getAccessId().getBoardId(),
+                userBoardAccessJpaEntity.getAccessId().getUserId(),
+                BoardAccessRole.valueOf(userBoardAccessJpaEntity.getAccessRole())
         );
     }
 
-    public static UserBoardJpaEntity toUserBoardJpaEntity(BoardJpaEntity boardJpaEntity, UserBoardAccess userBoardAccess) {
-        UserJpaEntity userJpaEntity = UserMapper.toUserJpaEntity(userBoardAccess.getUser());
-
-        UserBoardJpaEntity userBoardJpaEntity = new UserBoardJpaEntity(
-                userJpaEntity,
+    public static UserBoardAccessJpaEntity toUserBoardJpaEntity(BoardJpaEntity boardJpaEntity, UserBoardAccess userBoardAccess) {
+        UserBoardAccessJpaEntity userBoardAccessJpaEntity = new UserBoardAccessJpaEntity(
+                userBoardAccess.getUserId(),
                 boardJpaEntity,
-                String.valueOf(userBoardAccess.getRole())
+                userBoardAccess.getRole().getValue()
         );
 
-        boardJpaEntity.addOwner(userBoardJpaEntity.getUser());
-        userJpaEntity.registerBoardAccess(userBoardJpaEntity);
-        return userBoardJpaEntity;
+        boardJpaEntity.addOwner(userBoardAccess.getUserId());
+        return userBoardAccessJpaEntity;
     }
 }

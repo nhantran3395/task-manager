@@ -8,10 +8,7 @@ import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
 import java.time.Instant;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -41,16 +38,9 @@ public class UserJpaEntity {
     @Temporal(TemporalType.TIMESTAMP)
     private Instant updatedAt;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private Set<UserBoardJpaEntity> boards = new HashSet<>();
-
     public UserJpaEntity(Long id, String externalId, String name) {
         this.id = id;
         this.externalId = externalId;
         this.name = name;
-    }
-
-    public void registerBoardAccess(UserBoardJpaEntity userBoardJpaEntity) {
-        boards.add(userBoardJpaEntity);
     }
 }

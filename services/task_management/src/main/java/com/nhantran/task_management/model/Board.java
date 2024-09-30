@@ -25,7 +25,7 @@ public class Board {
     }
 
     public void addOwner(User user) {
-        UserBoardAccess ownerAccess = new UserBoardAccess(this, user, BoardAccessRole.OWNER);
+        UserBoardAccess ownerAccess = new UserBoardAccess(this.id, user.getId(), BoardAccessRole.OWNER);
         accesses.add(ownerAccess);
     }
 }

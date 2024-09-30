@@ -8,13 +8,5 @@ import lombok.Getter;
 public class UserBoardAccess {
     private Long boardId;
     private Long userId;
-    private User user;
     private BoardAccessRole role;
-
-    public UserBoardAccess(Board board, User user, BoardAccessRole role) {
-        this.userId = user.getId();
-        this.user = user;
-        this.boardId = board.getId();
-        this.role = role;
-    }
 }

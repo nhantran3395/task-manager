@@ -8,6 +8,6 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface BoardJpaRepository extends JpaRepository<BoardJpaEntity, Long> {
-    @Query("SELECT b FROM BoardJpaEntity b JOIN b.users ub WHERE ub.user.id = :userId")
+    @Query("SELECT b FROM BoardJpaEntity b JOIN b.accesses uba WHERE uba.accessId.userId = :userId")
     List<BoardJpaEntity> findByUserId(@Param("userId") Long userId);
 }

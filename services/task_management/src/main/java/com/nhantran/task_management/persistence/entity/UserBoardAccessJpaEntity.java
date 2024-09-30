@@ -10,9 +10,9 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class UserBoardJpaEntity {
+public class UserBoardAccessJpaEntity {
     @EmbeddedId
-    private UserBoardId accessId;
+    private UserBoardAccessId accessId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("boardId")
@@ -21,8 +21,8 @@ public class UserBoardJpaEntity {
     @Column(name = "role")
     private String accessRole;
 
-    public UserBoardJpaEntity(Long userId, BoardJpaEntity boardEntity, String accessRole) {
-        this.accessId = new UserBoardId(userId, boardEntity.getId());
+    public UserBoardAccessJpaEntity(Long userId, BoardJpaEntity boardEntity, String accessRole) {
+        this.accessId = new UserBoardAccessId(userId, boardEntity.getId());
         this.board = boardEntity;
         this.accessRole = accessRole;
     }
