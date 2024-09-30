@@ -53,7 +53,10 @@ public class BoardManagementService implements BoardManagementUseCase{
 
     @Override
     public List<Board> getBoardsViewableByUser(BoardsViewableByUserQuery query) {
-        return boardManagementPersistencePort.getBoardsViewableByUser(query.externalUserId());
+        User user = userInfoPersistencePort.findUser(query.externalUserId())
+                .orElseThrow(UserNotFoundException::new);
+
+        return boardManagementPersistencePort.getBoardsViewableByUser(user);
     }
 
     @Override
