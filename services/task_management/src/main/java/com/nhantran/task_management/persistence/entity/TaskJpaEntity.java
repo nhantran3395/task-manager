@@ -2,6 +2,7 @@ package com.nhantran.task_management.persistence.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -16,6 +17,7 @@ import java.util.Set;
 @EntityListeners(AuditingEntityListener.class)
 @Getter
 @Setter
+@NoArgsConstructor
 public class TaskJpaEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,6 +25,9 @@ public class TaskJpaEntity {
 
     @Column(name = "title")
     private String title;
+
+    @Column(name = "description")
+    private String description;
 
     @Column(name = "thumbnail_url")
     private String thumbnailUrl;
@@ -46,4 +51,11 @@ public class TaskJpaEntity {
 
     @ManyToMany(mappedBy = "tasks")
     private Set<TagJpaEntity> tags = new HashSet<>();
+
+    public TaskJpaEntity(String title, String description, String thumbnailUrl, String status) {
+        this.title = title;
+        this.description = description;
+        this.thumbnailUrl = thumbnailUrl;
+        this.status = status;
+    }
 }

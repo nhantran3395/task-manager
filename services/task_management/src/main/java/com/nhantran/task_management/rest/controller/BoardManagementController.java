@@ -1,13 +1,18 @@
 package com.nhantran.task_management.rest.controller;
 
+import com.nhantran.task_management.rest.dto.command.AddTaskCommand;
 import com.nhantran.task_management.rest.dto.command.DeleteBoardCommand;
 import com.nhantran.task_management.rest.dto.mapper.BoardTOMapper;
+import com.nhantran.task_management.rest.dto.mapper.TaskTOMapper;
 import com.nhantran.task_management.rest.dto.query.BoardsViewableByUserQuery;
 import com.nhantran.task_management.rest.dto.command.CreateNewBoardCommand;
+import com.nhantran.task_management.rest.dto.query.TasksBelongToBoardQuery;
+import com.nhantran.task_management.rest.dto.request.AddNewTaskRequest;
 import com.nhantran.task_management.rest.dto.request.CreateNewBoardRequest;
 import com.nhantran.task_management.domain.model.Board;
 import com.nhantran.task_management.port.in.BoardManagementUseCase;
 import com.nhantran.task_management.rest.dto.to.BoardTO;
+import com.nhantran.task_management.rest.dto.to.TaskTO;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -65,5 +70,44 @@ public class BoardManagementController {
         DeleteBoardCommand deleteBoardCommand = new DeleteBoardCommand(boardId, principal.getName());
         boardManagementUseCase.deleteBoard(deleteBoardCommand);
         return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/{boardId}/tasks")
+    public ResponseEntity<Void> addTaskToBoard(
+            @PathVariable("boardId") Long boardId,
+            @RequestBody @Validated AddNewTaskRequest newTaskRequest,
+            Principal principal
+    ) {
+        AddTaskCommand addTaskCommand = new AddTaskCommand(
+                newTaskRequest.title(),
+                newTaskRequest.description(),
+                newTaskRequest.thumbnailUrl(),
+                boardId,
+                principal.getName()
+        );
+        Long newTaskId = boardManagementUseCase.addTask(addTaskCommand);
+        URI newBoardLocation = ServletUriComponentsBuilder
+                .fromCurrentRequestUri()
+                .path("/{taskId}")
+                .buildAndExpand(newTaskId)
+                .toUri();
+        return ResponseEntity.created(newBoardLocation).build();
+    }
+
+    @GetMapping("/{boardId}/tasks")
+    public ResponseEntity<List<TaskTO>> getTasksBelongToBoard(
+            @PathVariable("boardId") Long boardId,
+            Principal principal
+    ) {
+        TasksBelongToBoardQuery query = new TasksBelongToBoardQuery(
+                boardId,
+                principal.getName()
+        );
+        List<TaskTO> tasks = boardManagementUseCase
+                .getTasksBelongToBoard(query)
+                .stream()
+                .map(TaskTOMapper::toTaskTO)
+                .toList();
+        return ResponseEntity.ok(tasks);
     }
 }

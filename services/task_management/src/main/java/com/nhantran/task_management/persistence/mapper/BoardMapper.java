@@ -13,12 +13,11 @@ public final class BoardMapper {
                 boardJpaEntity.getId(),
                 boardJpaEntity.getName(),
                 boardJpaEntity.getIconSlug(),
-                boardJpaEntity.getTasks().stream().map(TaskMapper::toTask).collect(Collectors.toList()),
                 boardJpaEntity.getAccesses().stream().map(UserBoardAccessMapper::toUserBoardAccess).collect(Collectors.toSet())
         );
     }
 
-    public static BoardJpaEntity toBoardJpaEntity(Board board) {
+    public static BoardJpaEntity createNewBoardJpaEntity(Board board) {
         BoardJpaEntity boardJpaEntity = new BoardJpaEntity(
                 board.getName(), board.getIconSlug());
 

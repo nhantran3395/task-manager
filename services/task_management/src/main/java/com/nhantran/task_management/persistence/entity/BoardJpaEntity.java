@@ -40,7 +40,7 @@ public class BoardJpaEntity {
     @Temporal(TemporalType.TIMESTAMP)
     private Instant updatedAt;
 
-    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "board", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<TaskJpaEntity> tasks = new ArrayList<>();
 
     @OneToMany(mappedBy = "board", cascade = CascadeType.ALL, orphanRemoval = true)

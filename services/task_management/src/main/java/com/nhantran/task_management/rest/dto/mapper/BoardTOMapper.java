@@ -9,8 +9,6 @@ public final class BoardTOMapper {
                 board.getId(),
                 board.getName(),
                 board.getIconSlug(),
-                board.getTasks().stream()
-                        .map(TaskTOMapper::toTaskTO).toList(),
                 board.getAccesses().stream()
                         .filter(access -> access.getBoardId().equals(board.getId())).toList()
                         .getFirst().getRole().getValue()

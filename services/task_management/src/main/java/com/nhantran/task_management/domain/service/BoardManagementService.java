@@ -3,6 +3,7 @@ package com.nhantran.task_management.domain.service;
 import com.nhantran.task_management.domain.model.Board;
 import com.nhantran.task_management.domain.model.Task;
 import com.nhantran.task_management.domain.model.User;
+import com.nhantran.task_management.rest.dto.command.AddTaskCommand;
 import com.nhantran.task_management.rest.dto.command.CreateNewBoardCommand;
 import com.nhantran.task_management.rest.dto.command.DeleteBoardCommand;
 import com.nhantran.task_management.rest.dto.query.BoardsViewableByUserQuery;
@@ -64,7 +65,30 @@ public class BoardManagementService implements BoardManagementUseCase {
 
     @Override
     public List<Task> getTasksBelongToBoard(TasksBelongToBoardQuery query) {
+        userInfoPersistencePort.findUser(query.externalUserId())
+                .orElseThrow(UserNotFoundException::new);
+
+        boardManagementPersistencePort.findBoard(query.boardId())
+                .orElseThrow(ResourceNotFoundException::new);
+
         return boardManagementPersistencePort
                 .getTasksBelongToBoard(query.boardId());
+    }
+
+    @Override
+    public Long addTask(AddTaskCommand addTaskCommand) {
+        User user = userInfoPersistencePort.findUser(addTaskCommand.externalUserId())
+                .orElseThrow(UserNotFoundException::new);
+
+        Board boardToAddTask = boardManagementPersistencePort.findBoard(addTaskCommand.boardId())
+                .orElseThrow(ResourceNotFoundException::new);
+
+        if(!boardToAddTask.userCanAddTask(user)) {
+            throw new RoleNotAllowedException();
+        }
+
+        Task newTask = new Task(addTaskCommand.title(), addTaskCommand.description(), addTaskCommand.thumbnailUrl());
+
+        return boardManagementPersistencePort.addTask(newTask, boardToAddTask);
     }
 }

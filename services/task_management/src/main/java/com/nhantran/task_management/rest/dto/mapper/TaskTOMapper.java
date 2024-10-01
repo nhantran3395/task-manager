@@ -5,6 +5,12 @@ import com.nhantran.task_management.rest.dto.to.TaskTO;
 
 public final class TaskTOMapper {
     public static TaskTO toTaskTO(Task task){
-        return  new TaskTO();
+        return  new TaskTO(
+                task.getId(),
+                task.getTitle(),
+                task.getDescription(),
+                task.getThumbnailUrl(),
+                task.getStatus().getValue()
+        );
     }
 }

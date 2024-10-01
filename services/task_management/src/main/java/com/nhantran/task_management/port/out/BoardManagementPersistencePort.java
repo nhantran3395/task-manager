@@ -12,5 +12,6 @@ public interface BoardManagementPersistencePort {
     Long createNewBoard(Board boardToCreate);
     void deleteBoard(Board boardToDelete);
     List<Board> getBoardsViewableByUser(User user);
+    Long addTask(Task newTask, Board board);
     List<Task> getTasksBelongToBoard(Long boardId);
 }
