@@ -12,12 +12,20 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 
 @Component
 @AllArgsConstructor
 public class TaskManagementPersistenceAdapter implements TaskManagementPersistencePort {
     private final BoardJpaRepository boardRepository;
     private final TaskJpaRepository taskRepository;
+
+    @Override
+    public Optional<Task> findTask(Long taskId) {
+        return taskRepository
+                .findById(taskId)
+                .map(TaskMapper::toTask);
+    }
 
     @Override
     public Long addTask(Task newTask, Board board) {
@@ -37,8 +45,21 @@ public class TaskManagementPersistenceAdapter implements TaskManagementPersisten
                 .toList();
     }
 
+    @Override
+    public void updateTaskStatus(Task updatedTask) {
+        TaskJpaEntity taskEntity = findTaskEntity(updatedTask.getId());
+        taskEntity.setStatus(updatedTask.getStatus().getValue());
+
+        taskRepository.save(taskEntity);
+    }
+
     private BoardJpaEntity findBoardEntity(Long boardId) {
         return boardRepository.findById(boardId)
+                .orElseThrow(IllegalStateException::new);
+    }
+
+    private TaskJpaEntity findTaskEntity(Long taskId) {
+        return taskRepository.findById(taskId)
                 .orElseThrow(IllegalStateException::new);
     }
 }

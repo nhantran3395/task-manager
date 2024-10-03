@@ -49,4 +49,13 @@ public class Board {
                                 List.of(BoardAccessRole.OWNER, BoardAccessRole.MEMBER).contains(access.getRole())
                 );
     }
+
+    public boolean userCanModifyTask(User user) {
+        return accesses
+                .stream()
+                .anyMatch(access ->
+                        access.getUserId().equals(user.getId()) &&
+                                List.of(BoardAccessRole.OWNER, BoardAccessRole.MEMBER).contains(access.getRole())
+                );
+    }
 }

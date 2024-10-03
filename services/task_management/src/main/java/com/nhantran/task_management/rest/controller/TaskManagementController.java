@@ -1,10 +1,13 @@
 package com.nhantran.task_management.rest.controller;
 
+import com.nhantran.task_management.domain.model.UpdateStatusAction;
 import com.nhantran.task_management.port.in.TaskManagementUseCase;
 import com.nhantran.task_management.rest.dto.command.AddTaskCommand;
+import com.nhantran.task_management.rest.dto.command.UpdateTaskStatusCommand;
 import com.nhantran.task_management.rest.dto.mapper.TaskTOMapper;
 import com.nhantran.task_management.rest.dto.query.TasksBelongToBoardQuery;
 import com.nhantran.task_management.rest.dto.request.AddNewTaskRequest;
+import com.nhantran.task_management.rest.dto.request.UpdateTaskStatusRequest;
 import com.nhantran.task_management.rest.dto.to.TaskTO;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -59,5 +62,22 @@ public class TaskManagementController {
                 .map(TaskTOMapper::toTaskTO)
                 .toList();
         return ResponseEntity.ok(tasks);
+    }
+
+    @PutMapping(BASE_PATH + "/{taskId}/state")
+    public ResponseEntity<Void> updateTaskState(
+            @PathVariable("boardId") Long boardId,
+            @PathVariable("boardId") Long taskId,
+            @RequestBody @Validated UpdateTaskStatusRequest request,
+            Principal principal
+    ) {
+        UpdateTaskStatusCommand updateStatusCommand = new UpdateTaskStatusCommand(
+                taskId,
+                boardId,
+                UpdateStatusAction.fromValue(request.action()),
+                principal.getName()
+        );
+        taskManagementUseCase.updateTaskStatus(updateStatusCommand);
+        return ResponseEntity.noContent().build();
     }
 }

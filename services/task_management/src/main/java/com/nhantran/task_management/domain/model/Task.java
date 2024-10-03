@@ -1,23 +1,33 @@
 package com.nhantran.task_management.domain.model;
 
+import com.nhantran.task_management.domain.model.task_state.NewState;
+import com.nhantran.task_management.domain.model.task_state.TaskState;
+import com.nhantran.task_management.domain.model.task_state.TaskStateFactory;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Getter
+import java.util.Optional;
+
 @NoArgsConstructor
 public class Task {
+    @Getter
     private Long id;
+    @Getter
     private String title;
+    @Getter
     private String description;
-    private TaskStatus status;
+    @Getter
     private String thumbnailUrl;
+
+    private TaskState state;
+    private TaskState prevState;
     private Long boardId;
 
     public Task(String title, String description, String thumbnailUrl) {
         this.title = title;
         this.description = description;
         this.thumbnailUrl = thumbnailUrl;
-        this.status = TaskStatus.NEW;
+        this.state = new NewState(this);
     }
 
     public Task(Long id, String title, String description, String thumbnailUrl, TaskStatus status) {
@@ -25,6 +35,28 @@ public class Task {
         this.title = title;
         this.description = description;
         this.thumbnailUrl = thumbnailUrl;
-        this.status = status;
+        this.state = TaskStateFactory.fromStatus(status, this);
+    }
+
+    public void performStateUpdateAction(UpdateStatusAction action) {
+        switch (action) {
+            case NEXT_STATE -> state.next();
+            case PUT_ON_HOLD -> state.hold();
+            case RESTORE -> state.restore();
+            case CANCEL -> state.cancel();
+        }
+    }
+
+    public void changeState(TaskState nextState) {
+        this.prevState = state;
+        this.state = nextState;
+    }
+
+    public TaskStatus getStatus() {
+        return state.getStatusRepresentative();
+    }
+
+    public Optional<TaskState> getPrevState() {
+        return Optional.ofNullable(prevState);
     }
 }
