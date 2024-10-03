@@ -10,6 +10,6 @@ public class InProgressState extends AbstractTaskState {
 
     @Override
     public void next() {
-        changeState(new InReviewState(getTask()));
+        changeState(TaskStateFactory.ofInReview(task));
     }
 }

@@ -16,21 +16,21 @@ public class PendingState extends AbstractTaskState {
     }
 
     public void restore() {
-        Optional<TaskState> maybePrevState = getTask()
+        Optional<TaskState> maybePrevState = task
                 .getPrevState();
 
         if(maybePrevState.isEmpty()) {
-            changeState(new NewState(getTask()));
+            changeState(TaskStateFactory.ofNew(task));
             return;
         }
 
         TaskState prevState = maybePrevState.get();
         if (TaskStatus.isNewOrTodo(prevState.getStatusRepresentative())) {
-            changeState(new NewState(getTask()));
+            changeState(TaskStateFactory.ofNew(task));
             return;
         }
 
-        changeState(new InProgressState(getTask()));
+        changeState(TaskStateFactory.ofInProgress(task));
     }
 
     @Override

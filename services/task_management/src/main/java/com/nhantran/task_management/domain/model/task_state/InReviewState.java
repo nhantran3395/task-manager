@@ -10,6 +10,6 @@ public class InReviewState extends AbstractTaskState {
 
     @Override
     public void next() {
-        changeState(new ReadyForTestState(getTask()));
+        changeState(TaskStateFactory.ofReadyForTest(task));
     }
 }

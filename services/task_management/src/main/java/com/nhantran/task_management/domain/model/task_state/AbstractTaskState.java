@@ -4,10 +4,10 @@ import com.nhantran.task_management.domain.model.Task;
 import com.nhantran.task_management.domain.model.TaskStatus;
 import lombok.Getter;
 
-@Getter
 public abstract class AbstractTaskState implements TaskState {
+    @Getter
     private final TaskStatus statusRepresentative;
-    private final Task task;
+    protected final Task task;
 
     public AbstractTaskState(Task task, TaskStatus statusRepresentative) {
         this.task = task;
@@ -15,11 +15,11 @@ public abstract class AbstractTaskState implements TaskState {
     }
 
     public void cancel() {
-        task.changeState(new CancelledState(task));
+        task.changeState(TaskStateFactory.ofCancelled(task));
     }
 
     public void hold() {
-        task.changeState(new PendingState(task));
+        task.changeState(TaskStateFactory.ofPending(task));
     }
 
     public void restore() {

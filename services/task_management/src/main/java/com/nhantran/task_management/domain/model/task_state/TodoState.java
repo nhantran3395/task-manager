@@ -10,6 +10,6 @@ public class TodoState extends AbstractTaskState {
 
     @Override
     public void next() {
-        changeState(new InProgressState(getTask()));
+        changeState(TaskStateFactory.ofInProgress(task));
     }
 }

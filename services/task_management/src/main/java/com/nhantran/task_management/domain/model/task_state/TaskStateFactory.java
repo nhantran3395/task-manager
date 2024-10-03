@@ -4,6 +4,42 @@ import com.nhantran.task_management.domain.model.Task;
 import com.nhantran.task_management.domain.model.TaskStatus;
 
 public final class TaskStateFactory {
+    public static TaskState ofNew(Task task) {
+        return new NewState(task);
+    }
+
+    public static TaskState ofTodo(Task task) {
+        return new TodoState(task);
+    }
+
+    public static TaskState ofInProgress(Task task) {
+        return new InProgressState(task);
+    }
+
+    public static TaskState ofInReview(Task task) {
+        return new InReviewState(task);
+    }
+
+    public static TaskState ofReadyForTest(Task task) {
+        return new ReadyForTestState(task);
+    }
+
+    public static TaskState ofInTesting(Task task) {
+        return new InTestingState(task);
+    }
+
+    public static TaskState ofCompleted(Task task) {
+        return new CompletedState(task);
+    }
+
+    public static TaskState ofCancelled(Task task) {
+        return new CancelledState(task);
+    }
+
+    public static TaskState ofPending(Task task) {
+        return new PendingState(task);
+    }
+
     public static TaskState fromStatus(TaskStatus status, Task task) {
         switch (status) {
             case NEW -> {
