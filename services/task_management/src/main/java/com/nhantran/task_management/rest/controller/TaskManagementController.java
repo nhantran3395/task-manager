@@ -67,7 +67,7 @@ public class TaskManagementController {
     @PutMapping(BASE_PATH + "/{taskId}/state")
     public ResponseEntity<Void> updateTaskState(
             @PathVariable("boardId") Long boardId,
-            @PathVariable("boardId") Long taskId,
+            @PathVariable("taskId") Long taskId,
             @RequestBody @Validated UpdateTaskStatusRequest request,
             Principal principal
     ) {
