@@ -6,6 +6,7 @@ import com.nhantran.task_management.domain.model.task_state.TaskStateFactory;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.Objects;
 import java.util.Optional;
 
 @NoArgsConstructor
@@ -30,12 +31,21 @@ public class Task {
         this.state = new NewState(this);
     }
 
-    public Task(Long id, String title, String description, String thumbnailUrl, TaskStatus status) {
+    public Task(
+            Long id,
+            String title,
+            String description,
+            String thumbnailUrl,
+            TaskStatus status,
+            TaskStatus prevStatus
+    ) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.thumbnailUrl = thumbnailUrl;
         this.state = TaskStateFactory.fromStatus(status, this);
+        this.prevState = !Objects.isNull(prevStatus) ?
+                TaskStateFactory.fromStatus(prevStatus, this) : null;
     }
 
     public void performStateUpdateAction(UpdateStatusAction action) {
@@ -54,6 +64,11 @@ public class Task {
 
     public TaskStatus getStatus() {
         return state.getStatusRepresentative();
+    }
+
+    public Optional<TaskStatus> getPrevStatus() {
+        return Optional.ofNullable(prevState)
+                .map(TaskState::getStatusRepresentative);
     }
 
     public Optional<TaskState> getPrevState() {

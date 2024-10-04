@@ -2,6 +2,7 @@ package com.nhantran.task_management.persistence.adapter;
 
 import com.nhantran.task_management.domain.model.Board;
 import com.nhantran.task_management.domain.model.Task;
+import com.nhantran.task_management.domain.model.TaskStatus;
 import com.nhantran.task_management.persistence.entity.BoardJpaEntity;
 import com.nhantran.task_management.persistence.entity.TaskJpaEntity;
 import com.nhantran.task_management.persistence.mapper.TaskMapper;
@@ -48,6 +49,7 @@ public class TaskManagementPersistenceAdapter implements TaskManagementPersisten
     @Override
     public void updateTaskStatus(Task updatedTask) {
         TaskJpaEntity taskEntity = findTaskEntity(updatedTask.getId());
+        taskEntity.setPrevStatus(updatedTask.getPrevStatus().map(TaskStatus::getValue).orElse(null));
         taskEntity.setStatus(updatedTask.getStatus().getValue());
 
         taskRepository.save(taskEntity);

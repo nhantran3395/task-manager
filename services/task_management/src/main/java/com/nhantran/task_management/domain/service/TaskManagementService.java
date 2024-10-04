@@ -14,12 +14,14 @@ import com.nhantran.task_management.rest.dto.command.AddTaskCommand;
 import com.nhantran.task_management.rest.dto.command.UpdateTaskStatusCommand;
 import com.nhantran.task_management.rest.dto.query.TasksBelongToBoardQuery;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 @AllArgsConstructor
+@Slf4j
 public class TaskManagementService implements TaskManagementUseCase {
     private final BoardManagementPersistencePort boardManagementPersistencePort;
     private final UserInfoPersistencePort userInfoPersistencePort;
@@ -39,6 +41,11 @@ public class TaskManagementService implements TaskManagementUseCase {
 
     @Override
     public Long addTask(AddTaskCommand addTaskCommand) {
+        log.debug("user {} add task to board {}",
+                addTaskCommand.externalUserId(),
+                addTaskCommand.boardId()
+        );
+
         User user = userInfoPersistencePort.findUser(addTaskCommand.externalUserId())
                 .orElseThrow(UserNotFoundException::new);
 
@@ -56,6 +63,12 @@ public class TaskManagementService implements TaskManagementUseCase {
 
     @Override
     public void updateTaskStatus(UpdateTaskStatusCommand updateStatusCommand) {
+        log.debug("user {} perform action {} on task {}",
+                updateStatusCommand.externalUserId(),
+                updateStatusCommand.action(),
+                updateStatusCommand.taskId()
+        );
+
         User user = userInfoPersistencePort.findUser(updateStatusCommand.externalUserId())
                 .orElseThrow(UserNotFoundException::new);
 

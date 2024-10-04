@@ -35,6 +35,9 @@ public class TaskJpaEntity {
     @Column(name = "status")
     private String status;
 
+    @Column(name = "previous_status")
+    private String prevStatus;
+
     @CreatedDate
     @Column(name = "created_at", updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
@@ -52,10 +55,17 @@ public class TaskJpaEntity {
     @ManyToMany(mappedBy = "tasks")
     private Set<TagJpaEntity> tags = new HashSet<>();
 
-    public TaskJpaEntity(String title, String description, String thumbnailUrl, String status) {
+    public TaskJpaEntity(
+            String title,
+            String description,
+            String thumbnailUrl,
+            String status,
+            String prevStatus
+    ) {
         this.title = title;
         this.description = description;
         this.thumbnailUrl = thumbnailUrl;
         this.status = status;
+        this.prevStatus = prevStatus;
     }
 }

@@ -37,7 +37,10 @@ public class BoardManagementService implements BoardManagementUseCase {
 
     @Override
     public void deleteBoard(DeleteBoardCommand deleteBoardCommand) {
-        log.debug("user {} deleting board {}", deleteBoardCommand.externalUserId(), deleteBoardCommand.id());
+        log.debug("user {} delete board {}",
+                deleteBoardCommand.externalUserId(),
+                deleteBoardCommand.id()
+        );
 
         User user = userInfoPersistencePort.findUser(deleteBoardCommand.externalUserId())
                 .orElseThrow(UserNotFoundException::new);
