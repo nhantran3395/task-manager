@@ -1,4 +1,6 @@
 package com.nhantran.task_management.rest.request;
 
-public record AddNewTaskRequest(String title, String description, String thumbnailUrl) {
+import jakarta.validation.constraints.NotBlank;
+
+public record AddNewTaskRequest(@NotBlank String title, @NotBlank String description, String thumbnailUrl) {
 }

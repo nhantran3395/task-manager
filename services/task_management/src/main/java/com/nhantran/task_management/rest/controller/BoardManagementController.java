@@ -9,6 +9,9 @@ import com.nhantran.task_management.domain.model.Board;
 import com.nhantran.task_management.port.in.use_case.BoardManagementUseCase;
 import com.nhantran.task_management.rest.dto.to.BoardTO;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -65,6 +68,12 @@ public class BoardManagementController {
 
     @DeleteMapping(BASE_PATH + "/{boardId}")
     @Operation(summary = "Delete a board")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "204",
+                    content = { @Content(mediaType = "application/json") }
+            )
+    })
     public ResponseEntity<List<Board>> deleteBoard(
             @PathVariable("boardId") Long boardId,
             Principal principal

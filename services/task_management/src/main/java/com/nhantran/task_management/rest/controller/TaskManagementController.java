@@ -10,6 +10,9 @@ import com.nhantran.task_management.rest.request.AddNewTaskRequest;
 import com.nhantran.task_management.rest.request.UpdateTaskStatusRequest;
 import com.nhantran.task_management.rest.dto.to.TaskTO;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -71,6 +74,12 @@ public class TaskManagementController {
     }
 
     @PutMapping(BASE_PATH + "/{taskId}/state")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "204",
+                    content = { @Content(mediaType = "application/json") }
+            )
+    })
     @Operation(summary = "Update status of a task")
     public ResponseEntity<Void> updateTaskState(
             @PathVariable("boardId") Long boardId,

@@ -1,4 +1,6 @@
 package com.nhantran.task_management.rest.request;
 
-public record CreateNewBoardRequest(String name, String iconSlug) {
+import jakarta.validation.constraints.NotBlank;
+
+public record CreateNewBoardRequest(@NotBlank String name, String iconSlug) {
 }
