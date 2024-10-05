@@ -1,4 +1,4 @@
-package com.nhantran.task_management.rest.dto.query;
+package com.nhantran.task_management.port.in.query;
 
 public record BoardsViewableByUserQuery(String externalUserId) {
 }

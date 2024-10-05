@@ -17,7 +17,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(value = {UserNotFoundException.class})
     protected ResponseEntity<ErrorResponse> handleUserNotFound(UserNotFoundException ex, WebRequest request) {
         ErrorResponse response = ErrorResponse.builder()
-                .error(ex.getMessage())
+                .error(ex.getErrorCode())
                 .message(ex.getMessage())
                 .build();
 
@@ -27,7 +27,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(value = {RoleNotAllowedException.class})
     protected ResponseEntity<ErrorResponse> handleRoleNotAllowed(RoleNotAllowedException ex, WebRequest request) {
         ErrorResponse response = ErrorResponse.builder()
-                .error(ex.getMessage())
+                .error(ex.getErrorCode())
                 .message(ex.getMessage())
                 .build();
 
@@ -37,7 +37,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(value = {ResourceNotFoundException.class})
     protected ResponseEntity<ErrorResponse> handleResourceNotFound(ResourceNotFoundException ex, WebRequest request) {
         ErrorResponse response = ErrorResponse.builder()
-                .error(ex.getMessage())
+                .error(ex.getErrorCode())
                 .message(ex.getMessage())
                 .build();
 
@@ -50,7 +50,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
         ErrorResponse response = ErrorResponse.builder()
                 .error("INTERNAL_ERROR")
-                .message(ex.getMessage())
+                .message("Some unexpected error occurred, please contact the developer")
                 .build();
 
         return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);

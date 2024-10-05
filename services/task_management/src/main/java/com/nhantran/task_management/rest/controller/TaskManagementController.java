@@ -1,13 +1,13 @@
 package com.nhantran.task_management.rest.controller;
 
 import com.nhantran.task_management.domain.model.UpdateStatusAction;
-import com.nhantran.task_management.port.in.TaskManagementUseCase;
-import com.nhantran.task_management.rest.dto.command.AddTaskCommand;
-import com.nhantran.task_management.rest.dto.command.UpdateTaskStatusCommand;
+import com.nhantran.task_management.port.in.use_case.TaskManagementUseCase;
+import com.nhantran.task_management.port.in.command.AddTaskCommand;
+import com.nhantran.task_management.port.in.command.UpdateTaskStatusCommand;
 import com.nhantran.task_management.rest.dto.mapper.TaskTOMapper;
-import com.nhantran.task_management.rest.dto.query.TasksBelongToBoardQuery;
-import com.nhantran.task_management.rest.dto.request.AddNewTaskRequest;
-import com.nhantran.task_management.rest.dto.request.UpdateTaskStatusRequest;
+import com.nhantran.task_management.port.in.query.TasksBelongToBoardQuery;
+import com.nhantran.task_management.rest.request.AddNewTaskRequest;
+import com.nhantran.task_management.rest.request.UpdateTaskStatusRequest;
 import com.nhantran.task_management.rest.dto.to.TaskTO;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;

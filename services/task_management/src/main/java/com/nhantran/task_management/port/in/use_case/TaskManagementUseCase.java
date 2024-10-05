@@ -1,9 +1,9 @@
-package com.nhantran.task_management.port.in;
+package com.nhantran.task_management.port.in.use_case;
 
 import com.nhantran.task_management.domain.model.Task;
-import com.nhantran.task_management.rest.dto.command.AddTaskCommand;
-import com.nhantran.task_management.rest.dto.command.UpdateTaskStatusCommand;
-import com.nhantran.task_management.rest.dto.query.TasksBelongToBoardQuery;
+import com.nhantran.task_management.port.in.command.AddTaskCommand;
+import com.nhantran.task_management.port.in.command.UpdateTaskStatusCommand;
+import com.nhantran.task_management.port.in.query.TasksBelongToBoardQuery;
 
 import java.util.List;
 

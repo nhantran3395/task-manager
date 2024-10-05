@@ -1,4 +1,4 @@
-package com.nhantran.task_management.rest.dto.command;
+package com.nhantran.task_management.port.in.command;
 
 import com.nhantran.task_management.domain.model.UpdateStatusAction;
 

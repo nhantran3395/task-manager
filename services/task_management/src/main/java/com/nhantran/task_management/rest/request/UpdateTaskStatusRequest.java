@@ -1,4 +1,4 @@
-package com.nhantran.task_management.rest.dto.request;
+package com.nhantran.task_management.rest.request;
 
 public record UpdateTaskStatusRequest(String action) {
 }
