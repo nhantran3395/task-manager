@@ -9,12 +9,15 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import java.time.Instant;
+
 @RestControllerAdvice
 @Slf4j
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(value = {UserNotFoundException.class})
     protected ResponseEntity<ErrorResponse> handleUserNotFound(UserNotFoundException ex, WebRequest request) {
         ErrorResponse response = ErrorResponse.builder()
+                .timestamp(Instant.now())
                 .error(ex.getErrorCode())
                 .message(ex.getMessage())
                 .build();
@@ -25,6 +28,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(value = {RoleNotAllowedException.class})
     protected ResponseEntity<ErrorResponse> handleRoleNotAllowed(RoleNotAllowedException ex, WebRequest request) {
         ErrorResponse response = ErrorResponse.builder()
+                .timestamp(Instant.now())
                 .error(ex.getErrorCode())
                 .message(ex.getMessage())
                 .build();
@@ -35,6 +39,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(value = {ResourceNotFoundException.class, ResourceNotBelongToParentException.class})
     protected ResponseEntity<ErrorResponse> handleInvalidResource(GenericDomainException ex, WebRequest request) {
         ErrorResponse response = ErrorResponse.builder()
+                .timestamp(Instant.now())
                 .error(ex.getErrorCode())
                 .message(ex.getMessage())
                 .build();
@@ -47,6 +52,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         log.error("an error occurred with the request", ex);
 
         ErrorResponse response = ErrorResponse.builder()
+                .timestamp(Instant.now())
                 .error("INTERNAL_ERROR")
                 .message("Some unexpected error occurred, please contact the developer")
                 .build();
