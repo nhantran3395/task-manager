@@ -14,9 +14,9 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -36,7 +36,7 @@ public class TaskManagementController {
     @Operation(summary = "Create a new task and assign to board")
     public ResponseEntity<Void> addTaskToBoard(
             @PathVariable("boardId") Long boardId,
-            @RequestBody @Validated AddNewTaskRequest newTaskRequest,
+            @RequestBody @Valid AddNewTaskRequest newTaskRequest,
             Principal principal
     ) {
         AddTaskCommand addTaskCommand = new AddTaskCommand(
@@ -84,7 +84,7 @@ public class TaskManagementController {
     public ResponseEntity<Void> updateTaskState(
             @PathVariable("boardId") Long boardId,
             @PathVariable("taskId") Long taskId,
-            @RequestBody @Validated UpdateTaskStatusRequest request,
+            @RequestBody @Valid UpdateTaskStatusRequest request,
             Principal principal
     ) {
         UpdateTaskStatusCommand updateStatusCommand = new UpdateTaskStatusCommand(

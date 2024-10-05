@@ -13,9 +13,9 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -34,7 +34,7 @@ public class BoardManagementController {
     @PostMapping(BASE_PATH)
     @Operation(summary = "Create a new board")
     public ResponseEntity<Void> createNewBoard(
-            @RequestBody @Validated CreateNewBoardRequest newBoardRequest,
+            @RequestBody @Valid CreateNewBoardRequest newBoardRequest,
             Principal principal
     ) {
         CreateNewBoardCommand newBoardCommand = new CreateNewBoardCommand(
