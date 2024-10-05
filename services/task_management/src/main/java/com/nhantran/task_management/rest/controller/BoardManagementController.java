@@ -8,6 +8,8 @@ import com.nhantran.task_management.rest.request.CreateNewBoardRequest;
 import com.nhantran.task_management.domain.model.Board;
 import com.nhantran.task_management.port.in.use_case.BoardManagementUseCase;
 import com.nhantran.task_management.rest.dto.to.BoardTO;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -19,12 +21,15 @@ import java.security.Principal;
 import java.util.List;
 
 @RestController
+@RequestMapping(path = "/v0")
 @AllArgsConstructor
+@Tag(name = "Board")
 public class BoardManagementController {
-    private static final String BASE_PATH = "/boards";
+    private static final String BASE_PATH = "boards";
     private final BoardManagementUseCase boardManagementUseCase;
 
     @PostMapping(BASE_PATH)
+    @Operation(summary = "Create a new board")
     public ResponseEntity<Void> createNewBoard(
             @RequestBody @Validated CreateNewBoardRequest newBoardRequest,
             Principal principal
@@ -44,6 +49,7 @@ public class BoardManagementController {
     }
 
     @GetMapping(BASE_PATH)
+    @Operation(summary = "Get list of boards")
     public ResponseEntity<List<BoardTO>> getBoardsViewableByUser(
             Principal principal
     ) {
@@ -58,6 +64,7 @@ public class BoardManagementController {
     }
 
     @DeleteMapping(BASE_PATH + "/{boardId}")
+    @Operation(summary = "Delete a board")
     public ResponseEntity<List<Board>> deleteBoard(
             @PathVariable("boardId") Long boardId,
             Principal principal
