@@ -57,6 +57,10 @@ public class Task {
         }
     }
 
+    public boolean isBelongTo(Long boardId) {
+        return Objects.equals(boardId, this.boardId);
+    }
+
     public void changeState(TaskState nextState) {
         this.prevState = state;
         this.state = nextState;

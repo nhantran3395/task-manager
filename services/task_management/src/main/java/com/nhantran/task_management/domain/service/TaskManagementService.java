@@ -3,6 +3,7 @@ package com.nhantran.task_management.domain.service;
 import com.nhantran.task_management.domain.model.Board;
 import com.nhantran.task_management.domain.model.Task;
 import com.nhantran.task_management.domain.model.User;
+import com.nhantran.task_management.exception.ResourceNotBelongToParentException;
 import com.nhantran.task_management.exception.ResourceNotFoundException;
 import com.nhantran.task_management.exception.RoleNotAllowedException;
 import com.nhantran.task_management.exception.UserNotFoundException;
@@ -17,6 +18,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.text.MessageFormat;
 import java.util.List;
 
 @Service
@@ -80,6 +82,12 @@ public class TaskManagementService implements TaskManagementUseCase {
 
         if(!board.userCanModifyTask(user)){
             throw new RoleNotAllowedException();
+        }
+
+        if(!task.isBelongTo(board.getId())){
+            throw new ResourceNotBelongToParentException(
+                    MessageFormat.format("Task {0} does not belong to board {1}", task.getId(), board.getId())
+            );
         }
 
         task.performStateUpdateAction(updateStatusCommand.action());

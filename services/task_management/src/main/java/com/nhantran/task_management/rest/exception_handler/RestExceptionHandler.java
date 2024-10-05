@@ -1,8 +1,6 @@
 package com.nhantran.task_management.rest.exception_handler;
 
-import com.nhantran.task_management.exception.ResourceNotFoundException;
-import com.nhantran.task_management.exception.RoleNotAllowedException;
-import com.nhantran.task_management.exception.UserNotFoundException;
+import com.nhantran.task_management.exception.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,8 +32,8 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
     }
 
-    @ExceptionHandler(value = {ResourceNotFoundException.class})
-    protected ResponseEntity<ErrorResponse> handleResourceNotFound(ResourceNotFoundException ex, WebRequest request) {
+    @ExceptionHandler(value = {ResourceNotFoundException.class, ResourceNotBelongToParentException.class})
+    protected ResponseEntity<ErrorResponse> handleInvalidResource(GenericDomainException ex, WebRequest request) {
         ErrorResponse response = ErrorResponse.builder()
                 .error(ex.getErrorCode())
                 .message(ex.getMessage())
