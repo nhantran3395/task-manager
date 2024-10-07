@@ -1,0 +1,19 @@
+AWSTemplateFormatVersion: 2010-09-09
+Transform: AWS::Serverless-2016-10-31
+Resources:
+  StoreMetadataFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: com.nhantran.StoreMetadataFunction::handler
+      Runtime: java21
+      CodeUri: .
+      Environment:
+        Variables:
+        # Add environment variables as needed
+      Events:
+        ApiGateway:
+          Type: ApiGateway
+          Properties:
+            Path: /metadata
+            Method: POST
+  # Add other lambda functions and API Gateway integrations
